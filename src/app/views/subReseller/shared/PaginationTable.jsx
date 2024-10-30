@@ -9,12 +9,13 @@ import {
   TableCell,
   TableHead,
   IconButton,
-  TablePagination
+  TablePagination,
+  Avatar
 } from "@mui/material";
+import { Paragraph } from "app/components/Typography";
 import { useDispatch, useSelector } from "react-redux";
-import {getTransactions} from '../../../redux/actions/transactionAction'
+import {getSubReseller} from '../../../redux/actions/subResellerAction'
 import { useEffect } from "react";
-import { format } from 'date-fns';
 
 // STYLED COMPONENT
 const StyledTable = styled(Table)(() => ({
@@ -27,77 +28,13 @@ const StyledTable = styled(Table)(() => ({
   }
 }));
 
-const subscribarList = [
-  {
-    name: "john doe",
-    date: "18 january, 2019",
-    amount: 1000,
-    status: "close",
-    company: "ABC Fintech LTD."
-  },
-  {
-    name: "kessy bryan",
-    date: "10 january, 2019",
-    amount: 9000,
-    status: "open",
-    company: "My Fintech LTD."
-  },
-  {
-    name: "kessy bryan",
-    date: "10 january, 2019",
-    amount: 9000,
-    status: "open",
-    company: "My Fintech LTD."
-  },
-  {
-    name: "james cassegne",
-    date: "8 january, 2019",
-    amount: 5000,
-    status: "close",
-    company: "Collboy Tech LTD."
-  },
-  {
-    name: "lucy brown",
-    date: "1 january, 2019",
-    amount: 89000,
-    status: "open",
-    company: "ABC Fintech LTD."
-  },
-  {
-    name: "lucy brown",
-    date: "1 january, 2019",
-    amount: 89000,
-    status: "open",
-    company: "ABC Fintech LTD."
-  },
-  {
-    name: "lucy brown",
-    date: "1 january, 2019",
-    amount: 89000,
-    status: "open",
-    company: "ABC Fintech LTD."
-  },
-  {
-    name: "lucy brown",
-    date: "1 january, 2019",
-    amount: 89000,
-    status: "open",
-    company: "ABC Fintech LTD."
-  },
-  {
-    name: "lucy brown",
-    date: "1 january, 2019",
-    amount: 89000,
-    status: "open",
-    company: "ABC Fintech LTD."
-  }
-];
+
 
 export default function PaginationTable() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const dispatch=useDispatch()
-  const {transactionList,total_items}=useSelector((state)=>state.transactionListReducer)
+  const {subResellerList,total_items}=useSelector((state)=>state.subResellerListReducer)
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -109,7 +46,7 @@ export default function PaginationTable() {
   };
 
   useEffect(()=>{
-    dispatch(getTransactions(page+1,rowsPerPage))
+    dispatch(getSubReseller())
   },[dispatch,page,rowsPerPage])
 
   
@@ -119,32 +56,25 @@ export default function PaginationTable() {
       <StyledTable>
         <TableHead>
           <TableRow>
-            <TableCell align="left">Reseller Name</TableCell>
-            <TableCell align="center">Date</TableCell>
-            <TableCell align="center">Status</TableCell>
-            <TableCell align="center">Amount</TableCell>
-            <TableCell align="right">Action</TableCell>
+            <TableCell align="left" colSpan={4}>Reseller Name</TableCell>
+            <TableCell align="center" colSpan={2}>Balance</TableCell>
+            <TableCell align="center" colSpan={2}>Phone</TableCell>
+            <TableCell align="right" colSpan={2}>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {transactionList
-            .map((transaction, index) => (
+          {subResellerList
+            .map((subReseller, index) => (
               <TableRow key={index}>
-                <TableCell align="left">{transaction.reseller.reseller_name}</TableCell>
-                <TableCell align="center">{format(new Date(transaction.created_at), 'dd-MM-yyyy')}</TableCell>
-                <TableCell
-                    align="center"
-                    style={{ color: transaction.status.toLowerCase() === 'debit' ? 'red' : 'green' }}
-                  >
-                    {transaction.status}
-              </TableCell>
-              <TableCell
-                align="center"
-                style={{ color: transaction.status.toLowerCase() === 'debit' ? 'red' : 'green' }}
-                >
-                {transaction.currency.code} {transaction.amount}
-              </TableCell>
-                <TableCell align="right">
+                <TableCell align="left" colSpan={4}>
+                  <Box display="flex" alignItems="center" gap={4}>
+                    <Avatar src={subReseller.profile_image_url} />
+                    <Paragraph>{subReseller.reseller_name}</Paragraph>
+                  </Box>
+                </TableCell>
+                <TableCell align="center" colSpan={2}>{subReseller.balance}</TableCell>
+                <TableCell align="center" colSpan={2}>{subReseller.phone}</TableCell>
+                <TableCell align="right" colSpan={2}>
                   <IconButton>
                     <Icon color="error">close</Icon>
                   </IconButton>

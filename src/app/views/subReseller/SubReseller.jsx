@@ -31,7 +31,7 @@ export default function SubReseller() {
   return (
     <Fragment>
       <ContentBox className="analytics">
-      <SimpleCard title="Transaction List">
+      <SimpleCard title="Sub Reseller List">
         <PaginationTable />
         {/* <SimpleForm/> */}
       </SimpleCard>

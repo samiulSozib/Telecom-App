@@ -4,6 +4,7 @@ import dashboardReducer from './dashboardReducer'
 import serviceCategoriesReducer from './serviceCategoriesReducer'
 import orderListReducer from './orderReducer'
 import transactionListReducer from './transactionReducer'
+import subResellerListReducer from './subResellerReducer'
 
 
 const rootReducer=combineReducers({
@@ -11,7 +12,8 @@ const rootReducer=combineReducers({
     dashboardReducer:dashboardReducer,
     serviceCategoriesReducer:serviceCategoriesReducer,
     orderListReducer:orderListReducer,
-    transactionListReducer:transactionListReducer
+    transactionListReducer:transactionListReducer,
+    subResellerListReducer:subResellerListReducer
 })
 
 export default rootReducer

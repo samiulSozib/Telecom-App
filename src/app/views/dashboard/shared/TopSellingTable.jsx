@@ -95,7 +95,7 @@ export default function TopSellingTable() {
                 Account
               </TableCell>
 
-              <TableCell colSpan={2} sx={{ px: 0 }}>
+              <TableCell colSpan={3} sx={{ px: 0 }}>
                 Title
               </TableCell>
 
@@ -107,16 +107,16 @@ export default function TopSellingTable() {
                 Buy
               </TableCell>
 
-              <TableCell colSpan={2} sx={{ px: 0 }}>
+              <TableCell colSpan={3} sx={{ px: 0 }}>
                 Validity
               </TableCell>
 
 
-              <TableCell colSpan={2} sx={{ px: 0 }}>
+              <TableCell colSpan={3} sx={{ px: 0 }}>
                 Date
               </TableCell>
 
-              <TableCell colSpan={2} sx={{ px: 0 }}>
+              <TableCell colSpan={4} sx={{ px: 0 }}>
                 Status
               </TableCell>
 
@@ -136,7 +136,7 @@ export default function TopSellingTable() {
                   </Box>
                 </TableCell>
 
-                <TableCell align="left" colSpan={2} sx={{ px: 0, textTransform: "capitalize" }}>
+                <TableCell align="left" colSpan={3} sx={{ px: 0, textTransform: "capitalize" }}>
                   {order.bundle.bundle_title}
                 </TableCell>
 
@@ -148,15 +148,15 @@ export default function TopSellingTable() {
                   {order.bundle.buying_price}
                 </TableCell>
 
-                <TableCell align="left" colSpan={2} sx={{ px: 0, textTransform: "capitalize" }}>
+                <TableCell align="left" colSpan={3} sx={{ px: 0, textTransform: "capitalize" }}>
                   {order.bundle.validity_type}
                 </TableCell>
 
-                <TableCell align="left" colSpan={2} sx={{ px: 0, textTransform: "capitalize" }}>
+                <TableCell align="left" colSpan={3} sx={{ px: 0, textTransform: "capitalize" }}>
                 {format(new Date(order.created_at), 'dd-MM-yyyy')}
                 </TableCell>
 
-                <TableCell sx={{ px: 0 }} align="left" colSpan={2}>
+                <TableCell sx={{ px: 0 }} align="left" colSpan={4}>
                   {order.status === 0 ? (
                     <Small bgcolor={bgSecondary}>Pending</Small>
                   ) : order.status === 1 ? (
