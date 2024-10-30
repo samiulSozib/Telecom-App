@@ -11,6 +11,10 @@ import {
   IconButton,
   TablePagination
 } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import {getTransactions} from '../../../redux/actions/transactionAction'
+import { useEffect } from "react";
+import { format } from 'date-fns';
 
 // STYLED COMPONENT
 const StyledTable = styled(Table)(() => ({
@@ -91,7 +95,9 @@ const subscribarList = [
 
 export default function PaginationTable() {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const dispatch=useDispatch()
+  const {transactionList,total_items}=useSelector((state)=>state.transactionListReducer)
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -102,29 +108,42 @@ export default function PaginationTable() {
     setPage(0);
   };
 
+  useEffect(()=>{
+    dispatch(getTransactions(page+1,rowsPerPage))
+  },[dispatch,page,rowsPerPage])
+
+  
+
   return (
     <Box width="100%" overflow="auto">
       <StyledTable>
         <TableHead>
           <TableRow>
-            <TableCell align="left">Name</TableCell>
-            <TableCell align="center">Company</TableCell>
-            <TableCell align="center">Start Date</TableCell>
+            <TableCell align="left">Reseller Name</TableCell>
+            <TableCell align="center">Date</TableCell>
             <TableCell align="center">Status</TableCell>
             <TableCell align="center">Amount</TableCell>
             <TableCell align="right">Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {subscribarList
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((subscriber, index) => (
+          {transactionList
+            .map((transaction, index) => (
               <TableRow key={index}>
-                <TableCell align="left">{subscriber.name}</TableCell>
-                <TableCell align="center">{subscriber.company}</TableCell>
-                <TableCell align="center">{subscriber.date}</TableCell>
-                <TableCell align="center">{subscriber.status}</TableCell>
-                <TableCell align="center">${subscriber.amount}</TableCell>
+                <TableCell align="left">{transaction.reseller.reseller_name}</TableCell>
+                <TableCell align="center">{format(new Date(transaction.created_at), 'dd-MM-yyyy')}</TableCell>
+                <TableCell
+                    align="center"
+                    style={{ color: transaction.status.toLowerCase() === 'debit' ? 'red' : 'green' }}
+                  >
+                    {transaction.status}
+              </TableCell>
+              <TableCell
+                align="center"
+                style={{ color: transaction.status.toLowerCase() === 'debit' ? 'red' : 'green' }}
+                >
+                {transaction.currency.code} {transaction.amount}
+              </TableCell>
                 <TableCell align="right">
                   <IconButton>
                     <Icon color="error">close</Icon>
@@ -140,9 +159,9 @@ export default function PaginationTable() {
         page={page}
         component="div"
         rowsPerPage={rowsPerPage}
-        count={subscribarList.length}
+        count={total_items}
         onPageChange={handleChangePage}
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={[10, 20, 30]}
         onRowsPerPageChange={handleChangeRowsPerPage}
         nextIconButtonProps={{ "aria-label": "Next Page" }}
         backIconButtonProps={{ "aria-label": "Previous Page" }}

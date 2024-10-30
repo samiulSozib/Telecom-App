@@ -18,6 +18,12 @@ const ForgotPassword = Loadable(lazy(() => import("app/views/sessions/ForgotPass
 const AppEchart = Loadable(lazy(() => import("app/views/charts/echarts/AppEchart")));
 // DASHBOARD PAGE
 const Analytics = Loadable(lazy(() => import("app/views/dashboard/Analytics")));
+// Transaction page
+const Transaction=Loadable(lazy(()=>import("app/views/transaction/Transaction") ))
+// Order page
+const Order=Loadable(lazy(()=>import("app/views/order/Order")))
+// SubReseller page 
+const SubReseller=Loadable(lazy(()=>import("app/views/subReseller/SubReseller")))
 
 const routes = [
   {
@@ -31,10 +37,14 @@ const routes = [
       // dashboard route
       { path: "/dashboard/default", element: <Analytics />, auth: authRoles.admin },
       // e-chart route
-      { path: "/charts/echarts", element: <AppEchart />, auth: authRoles.editor }
+      { path: "/charts/echarts", element: <AppEchart />, auth: authRoles.editor },
+      { path: "/transaction/default", element: <Transaction /> },
+      { path: "/order/default", element: <Order /> },
+      { path: "/sub-reseller/default", element: <SubReseller /> },
     ]
   },
 
+  
   // session pages route
   { path: "/session/404", element: <NotFound /> },
   { path: "/session/signin", element: <JwtLogin /> },

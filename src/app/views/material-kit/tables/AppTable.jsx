@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
 import SimpleTable from "./SimpleTable";
-import PaginationTable from "./PaginationTable";
+import PaginationTable from "../../transaction/shared/PaginationTable";
 import { Breadcrumb, SimpleCard } from "app/components";
 
 // STYLED COMPONENTS

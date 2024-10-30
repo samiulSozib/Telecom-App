@@ -1,9 +1,9 @@
 export const navigations = [
   { name: "Dashboard", path: "/dashboard/default", icon: "dashboard" },
   { label: "PAGES", type: "label" },
-  { name: "Transaction", path: "/dashboard/default", icon: "dashboard" },
-  { name: "Order", path: "/dashboard/default", icon: "dashboard" },
-  { name: "Sub Reseller", path: "/dashboard/default", icon: "dashboard" },
+  { name: "Transaction", path: "/transaction/default", icon: "dashboard" },
+  { name: "Order", path: "/order/default", icon: "dashboard" },
+  { name: "Sub Reseller", path: "/sub-reseller/default", icon: "dashboard" },
   { name: "Services", path: "/dashboard/default", icon: "dashboard" },
   // {
   //   name: "Session/Auth",
