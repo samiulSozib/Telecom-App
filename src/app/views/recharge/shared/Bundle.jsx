@@ -10,11 +10,11 @@ import {
   useTheme,
   MenuItem,
   TableBody,
-  TableCell,
   TableHead,
   IconButton,
   TablePagination
 } from "@mui/material";
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { Paragraph } from "app/components/Typography";
 import { useLocation } from "react-router-dom";
 import {getServices} from '../../../redux/actions/serviceAction'
@@ -51,6 +51,8 @@ const ProductTable = styled(Table)(() => ({
   "& td:first-of-type": { paddingLeft: "16px !important" }
 }));
 
+
+
 const Small = styled("small")(({ bgcolor }) => ({
   width: 50,
   height: 15,
@@ -76,6 +78,25 @@ const ImageListContainer = styled(Box)(() => ({
     objectFit: "cover",
   },
   
+}));
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    color: theme.palette.common.black,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
 }));
 
 export default function Bundle() {
@@ -140,98 +161,65 @@ export default function Bundle() {
       
 
       <Box overflow="auto">
-        <ProductTable>
+      <Table sx={{ minWidth: 700 }}>
           <TableHead>
             <TableRow>
-              <TableCell colSpan={4} sx={{ px: 3 }}>
+              <StyledTableCell colSpan={3} sx={{ px: 3 }}>
                 Bundle Name
-              </TableCell>
+              </StyledTableCell>
 
-              <TableCell colSpan={2} sx={{ px: 0 }}>
+              <StyledTableCell colSpan={3} sx={{ px: 0 }}>
                 Selling Price
-              </TableCell>
+              </StyledTableCell>
 
-              <TableCell colSpan={2} sx={{ px: 0 }}>
+              <StyledTableCell colSpan={3} sx={{ px: 0 }}>
                 Validity
-              </TableCell>
+              </StyledTableCell>
 
 
-              <TableCell colSpan={2} sx={{ px: 0 }}>
+              <StyledTableCell colSpan={2} sx={{ px: 0 }}>
                 Buying Price
-              </TableCell>
+              </StyledTableCell>
 
-              <TableCell colSpan={1} sx={{ px: 0 }}>
+              <StyledTableCell colSpan={1} sx={{ px: 0 }}>
                 Action
-              </TableCell>
+              </StyledTableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {bundleList.map((bundle, index) => (
-              <TableRow key={index} hover>
-                <TableCell colSpan={4} align="left" sx={{ px: 0, textTransform: "capitalize" }}>
+              <StyledTableRow key={index} hover>
+                <StyledTableCell colSpan={3} align="left" sx={{ px: 0, textTransform: "capitalize" }}>
                   <Box display="flex" alignItems="center" gap={4}>
                     <Avatar src={bundle.service.company.company_logo} />
                     <Paragraph>{bundle.bundle_title}</Paragraph>
                   </Box>
-                </TableCell>
+                </StyledTableCell>
 
-                <TableCell align="left" colSpan={2} sx={{ px: 0, textTransform: "capitalize" }}>
+                <StyledTableCell align="left" colSpan={3} sx={{ px: 0, textTransform: "capitalize" }}>
                   {bundle.selling_price}
-                </TableCell>
+                </StyledTableCell>
 
-                <TableCell sx={{ px: 0 }} align="left" colSpan={2}>
+                <StyledTableCell sx={{ px: 0 }} align="left" colSpan={3}>
                 {bundle.validity_type.charAt(0).toUpperCase() + bundle.validity_type.slice(1)}
-                </TableCell>
+                </StyledTableCell>
 
-                <TableCell align="left" colSpan={2} sx={{ px: 0, textTransform: "capitalize" }}>
+                <StyledTableCell align="left" colSpan={2} sx={{ px: 0, textTransform: "capitalize" }}>
                 {visibleRows[index] ? bundle.buying_price : "****"}
-                </TableCell>
+                </StyledTableCell>
 
-                <TableCell sx={{ px: 0 }} colSpan={1}>
+                <StyledTableCell sx={{ px: 0 }} colSpan={1}>
                   <IconButton onClick={() => handleVisibilityToggle(index)}>
                     {visibleRows[index] ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
-                </TableCell>
-              </TableRow>
+                </StyledTableCell>
+              </StyledTableRow>
             ))}
           </TableBody>
-        </ProductTable>
-        
+        </Table>
       </Box>
     </Card>
   );
 }
 
-const productList = [
-  {
-    imgUrl: "/assets/images/products/headphone-2.jpg",
-    name: "earphone",
-    price: 100,
-    available: 15
-  },
-  {
-    imgUrl: "/assets/images/products/headphone-3.jpg",
-    name: "earphone",
-    price: 1500,
-    available: 30
-  },
-  {
-    imgUrl: "/assets/images/products/iphone-2.jpg",
-    name: "iPhone x",
-    price: 1900,
-    available: 35
-  },
-  {
-    imgUrl: "/assets/images/products/iphone-1.jpg",
-    name: "iPhone x",
-    price: 100,
-    available: 0
-  },
-  {
-    imgUrl: "/assets/images/products/headphone-3.jpg",
-    name: "Head phone",
-    price: 1190,
-    available: 5
-  }
-];

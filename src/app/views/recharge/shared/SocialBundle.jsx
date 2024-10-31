@@ -130,15 +130,15 @@ export default function SocialBundle() {
         <ProductTable>
           <TableHead>
             <TableRow>
-              <TableCell colSpan={4} sx={{ px: 3 }}>
+              <TableCell colSpan={3} sx={{ px: 3 }}>
                 Bundle Name
               </TableCell>
 
-              <TableCell colSpan={2} sx={{ px: 0 }}>
+              <TableCell colSpan={3} sx={{ px: 0 }}>
                 Selling Price
               </TableCell>
 
-              <TableCell colSpan={2} sx={{ px: 0 }}>
+              <TableCell colSpan={3} sx={{ px: 0 }}>
                 Validity
               </TableCell>
 
@@ -156,18 +156,18 @@ export default function SocialBundle() {
           <TableBody>
             {bundleList.map((bundle, index) => (
               <TableRow key={index} hover>
-                <TableCell colSpan={4} align="left" sx={{ px: 0, textTransform: "capitalize" }}>
+                <TableCell colSpan={3} align="left" sx={{ px: 0, textTransform: "capitalize" }}>
                   <Box display="flex" alignItems="center" gap={4}>
                     <Avatar src={bundle.service.company.company_logo} />
                     <Paragraph>{bundle.bundle_title}</Paragraph>
                   </Box>
                 </TableCell>
 
-                <TableCell align="left" colSpan={2} sx={{ px: 0, textTransform: "capitalize" }}>
+                <TableCell align="left" colSpan={3} sx={{ px: 0, textTransform: "capitalize" }}>
                   {bundle.selling_price}
                 </TableCell>
 
-                <TableCell sx={{ px: 0 }} align="left" colSpan={2}>
+                <TableCell sx={{ px: 0 }} align="left" colSpan={3}>
                 {bundle.validity_type.charAt(0).toUpperCase() + bundle.validity_type.slice(1)}
                 </TableCell>
 
