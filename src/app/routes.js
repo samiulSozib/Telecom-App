@@ -24,6 +24,8 @@ const Transaction=Loadable(lazy(()=>import("app/views/transaction/Transaction") 
 const Order=Loadable(lazy(()=>import("app/views/order/Order")))
 // SubReseller page 
 const SubReseller=Loadable(lazy(()=>import("app/views/subReseller/SubReseller")))
+// Recharge page
+const Recharge=Loadable(lazy(()=>import("app/views/recharge/Recharge")))
 
 const routes = [
   {
@@ -41,6 +43,7 @@ const routes = [
       { path: "/transaction/default", element: <Transaction /> },
       { path: "/order/default", element: <Order /> },
       { path: "/sub-reseller/default", element: <SubReseller /> },
+      { path: "/recharge/default", element: <Recharge /> },
     ]
   },
 
