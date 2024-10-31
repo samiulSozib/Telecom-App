@@ -10,9 +10,8 @@ const StyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  padding: "16px",
+  padding: "8px", // reduced padding to make the card smaller
   background: theme.palette.background.paper,
- 
 }));
 
 const ContentBox = styled(Box)(({ theme }) => ({
@@ -20,16 +19,16 @@ const ContentBox = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   alignItems: "center",
   "& .icon": {
-    width: "60px",
-    height: "60px",
+    width: "40px", // reduced size for smaller appearance
+    height: "40px",
     borderRadius: "50%",
     background: theme.palette.primary.main,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: "8px"
+    marginBottom: "4px" // reduced margin for smaller spacing
   },
-  "& small": { color: theme.palette.text.secondary }
+  "& small": { color: theme.palette.text.secondary, fontSize: "0.75rem" } // smaller font size for the text
 }));
 
 export default function StatCards() {
@@ -49,52 +48,38 @@ export default function StatCards() {
   }, [serviceCategoryList]);
 
   return (
-    <Box>
-      {/* Country-based services */}
-      {Object.keys(categorizedServices.nonsocial || {}).map((country) => (
-        <Box key={country}>
-          <h6 style={{ margin: "16px 0", fontSize: "18px", fontWeight: "bold" }}>{country} Network</h6>
-          <Grid container spacing={2}>
-            {categorizedServices.nonsocial[country].companies.map((company) => (
-              <Grid item xs={6} sm={4} md={3} key={company.companyId}>
-                <StyledCard elevation={3}>
-                  <ContentBox>
-                    <Box >
-                      {/* Here you can replace with the actual image/logo */}
-                      <img src={categorizedServices.nonsocial[country].countryImage} alt={country} style={{ width: "100%", borderRadius: "20%" }} />
-                    </Box>
-                    <Small>{company.companyName}</Small>
-                  </ContentBox>
-                </StyledCard>
+    <Box sx={{ marginTop: "24px" }}>
+      {/* Unified service cards */}
+      {['nonsocial', 'social'].map((type) => (
+        <Box key={type}>
+          {Object.keys(categorizedServices[type] || {}).map((groupName) => (
+            <Box key={groupName} sx={{ marginBottom: "16px" }}>
+              <h6 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "8px" }}>
+                {type === 'nonsocial' ? `${groupName} Network` : groupName}
+              </h6>
+              <Grid container spacing={2}>
+                {categorizedServices[type][groupName].companies.map((company) => (
+                  <Grid item xs={6} sm={4} md={2} key={company.companyId}>
+                    <StyledCard elevation={3}>
+                      <ContentBox>
+                        <Box className="icon">
+                          {/* Display company or country image with reduced size */}
+                          <img
+                            src={type === 'nonsocial' ? categorizedServices[type][groupName].countryImage : company.companyLogo}
+                            alt={company.companyName}
+                            style={{ width: "100%", height: "100%", borderRadius: "50%" }}
+                          />
+                        </Box>
+                        <Small>{company.companyName}</Small>
+                      </ContentBox>
+                    </StyledCard>
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
+            </Box>
+          ))}
         </Box>
       ))}
-
-      {/* Social services */}
-      <Box sx={{ marginTop: "24px" }}>
-        {Object.keys(categorizedServices.social || {}).map((categoryName) => (
-          <Box key={categoryName} sx={{ marginBottom: "16px" }}>
-            <h6 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "8px" }}>{categoryName}</h6>
-            <Grid container spacing={2}>
-              {categorizedServices.social[categoryName].companies.map((company) => (
-                <Grid item xs={6} sm={4} md={3} key={company.companyId}>
-                  <StyledCard elevation={3}>
-                    <ContentBox>
-                      <Box className="icon">
-                        {/* Company logo image */}
-                        <img src={company.companyLogo} alt={company.companyName} style={{ width: "100%", borderRadius: "50%" }} />
-                      </Box>
-                      <Small>{company.companyName}</Small>
-                    </ContentBox>
-                  </StyledCard>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-        ))}
-      </Box>
     </Box>
   );
 }
