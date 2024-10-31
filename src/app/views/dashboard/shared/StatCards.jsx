@@ -12,7 +12,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   alignItems: "center",
   padding: "16px",
   background: theme.palette.background.paper,
-  height: "150px",
+ 
 }));
 
 const ContentBox = styled(Box)(({ theme }) => ({
