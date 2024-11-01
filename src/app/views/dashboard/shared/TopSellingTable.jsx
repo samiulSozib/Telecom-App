@@ -88,7 +88,7 @@ export default function TopSellingTable() {
       </CardHeader>
 
       <Box overflow="auto">
-        <ProductTable>
+        <ProductTable sx={{ minWidth: 700 }}>
           <TableHead>
             <TableRow>
               <TableCell colSpan={4} sx={{ px: 3 }}>

@@ -53,7 +53,7 @@ export default function PaginationTable() {
 
   return (
     <Box width="100%" overflow="auto">
-      <StyledTable>
+      <StyledTable sx={{ minWidth: 700 }}>
         <TableHead>
           <TableRow>
             <TableCell align="left" colSpan={4}>Reseller Name</TableCell>

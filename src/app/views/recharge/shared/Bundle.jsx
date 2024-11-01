@@ -8,13 +8,13 @@ import {
   styled,
   TableRow,
   useTheme,
+  TableCell,
   MenuItem,
   TableBody,
   TableHead,
   IconButton,
   TablePagination
 } from "@mui/material";
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { Paragraph } from "app/components/Typography";
 import { useLocation } from "react-router-dom";
 import {getServices} from '../../../redux/actions/serviceAction'
@@ -67,37 +67,18 @@ const Small = styled("small")(({ bgcolor }) => ({
 const ImageListContainer = styled(Box)(() => ({
   display: "flex",
   overflowX: "auto",
-  padding: "8px 0",
-  gap: "16px", // spacing between each image card
+  padding: "8px",
+  gap: "8px", // spacing between each image card
   "& > div": {
     padding: "8px", // padding inside each Card
   },
   "& img": {
-    height: "60px",
     borderRadius: "4px",
-    objectFit: "cover",
   },
   
 }));
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    color: theme.palette.common.black,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
 
 export default function Bundle() {
   const { palette } = useTheme();
@@ -150,8 +131,8 @@ export default function Bundle() {
       <Title></Title>
         <ImageListContainer>
           {serviceList.map((service, index) => (
-            <Card levation={3} key={index}>
-              <img src={service.company.company_logo} alt={service.company.company_name} />
+            <Card levation={3} key={index} sx={{minWidth:"70px",display: "flex", alignItems: "center", justifyContent: "center"}}>
+              <img src={service.company.company_logo} alt={service.company.company_name} style={{ width: "50px", height: "50px", objectFit: "cover" }} />
             </Card>
           ))}
         </ImageListContainer>
@@ -161,63 +142,63 @@ export default function Bundle() {
       
 
       <Box overflow="auto">
-      <Table sx={{ minWidth: 700 }}>
+      <ProductTable sx={{ minWidth: 700 }}>
           <TableHead>
             <TableRow>
-              <StyledTableCell colSpan={3} sx={{ px: 3 }}>
+              <TableCell colSpan={3} sx={{ px: 3 }}>
                 Bundle Name
-              </StyledTableCell>
+              </TableCell>
 
-              <StyledTableCell colSpan={3} sx={{ px: 0 }}>
+              <TableCell colSpan={3} sx={{ px: 0 }}>
                 Selling Price
-              </StyledTableCell>
+              </TableCell>
 
-              <StyledTableCell colSpan={3} sx={{ px: 0 }}>
+              <TableCell colSpan={3} sx={{ px: 0 }}>
                 Validity
-              </StyledTableCell>
+              </TableCell>
 
 
-              <StyledTableCell colSpan={2} sx={{ px: 0 }}>
+              <TableCell colSpan={2} sx={{ px: 0 }}>
                 Buying Price
-              </StyledTableCell>
+              </TableCell>
 
-              <StyledTableCell colSpan={1} sx={{ px: 0 }}>
+              <TableCell colSpan={1} sx={{ px: 0 }}>
                 Action
-              </StyledTableCell>
+              </TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {bundleList.map((bundle, index) => (
-              <StyledTableRow key={index} hover>
-                <StyledTableCell colSpan={3} align="left" sx={{ px: 0, textTransform: "capitalize" }}>
+              <TableRow key={index} hover>
+                <TableCell colSpan={3} align="left" sx={{ px: 0, textTransform: "capitalize" }}>
                   <Box display="flex" alignItems="center" gap={4}>
                     <Avatar src={bundle.service.company.company_logo} />
                     <Paragraph>{bundle.bundle_title}</Paragraph>
                   </Box>
-                </StyledTableCell>
+                </TableCell>
 
-                <StyledTableCell align="left" colSpan={3} sx={{ px: 0, textTransform: "capitalize" }}>
+                <TableCell align="left" colSpan={3} sx={{ px: 0, textTransform: "capitalize" }}>
                   {bundle.selling_price}
-                </StyledTableCell>
+                </TableCell>
 
-                <StyledTableCell sx={{ px: 0 }} align="left" colSpan={3}>
+                <TableCell sx={{ px: 0 }} align="left" colSpan={3}>
                 {bundle.validity_type.charAt(0).toUpperCase() + bundle.validity_type.slice(1)}
-                </StyledTableCell>
+                </TableCell>
 
-                <StyledTableCell align="left" colSpan={2} sx={{ px: 0, textTransform: "capitalize" }}>
+                <TableCell align="left" colSpan={2} sx={{ px: 0, textTransform: "capitalize" }}>
                 {visibleRows[index] ? bundle.buying_price : "****"}
-                </StyledTableCell>
+                </TableCell>
 
-                <StyledTableCell sx={{ px: 0 }} colSpan={1}>
+                <TableCell sx={{ px: 0 }} colSpan={1}>
                   <IconButton onClick={() => handleVisibilityToggle(index)}>
                     {visibleRows[index] ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
-                </StyledTableCell>
-              </StyledTableRow>
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
-        </Table>
+        </ProductTable>
       </Box>
     </Card>
   );

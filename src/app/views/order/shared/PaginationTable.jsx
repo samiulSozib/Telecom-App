@@ -134,7 +134,7 @@ export default function PaginationTable() {
 
   return (
     <Box width="100%" overflow="auto">
-      <StyledTable>
+      <StyledTable sx={{ minWidth: 750 }}>
         <TableHead>
         <TableRow>
               <TableCell colSpan={4} sx={{ px: 3 }}>
