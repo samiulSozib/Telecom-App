@@ -67,7 +67,7 @@ export default function JwtRegister() {
       navigate("/");
       setLoading(false);
     } catch (e) {
-      console.log(e);
+      //console.log(e);
       setLoading(false);
     }
   };

@@ -48,7 +48,7 @@ export default function StatCards() {
   useEffect(() => {
     if (serviceCategoryList) {
       const categorized = categorizeServices(serviceCategoryList);
-      console.log(categorized);
+      //console.log(categorized);
       setCategorizedServices(categorized);
     }
   }, [serviceCategoryList]);

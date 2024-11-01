@@ -13,7 +13,8 @@ import {
   TableCell,
   TableHead,
   IconButton,
-  TablePagination
+  TablePagination,
+  TextField
 } from "@mui/material";
 import { Paragraph } from "app/components/Typography";
 import { useLocation } from "react-router-dom";
@@ -88,18 +89,22 @@ export default function SocialBundle() {
   const countryId = queryParams.get('countryId');
   const categoryId = queryParams.get('categoryId');
   const companyId=queryParams.get('companyId')
+  const [searchTag,setSearchTag]=useState("")
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
 
   //console.log('Country ID:', countryId);
   //console.log('Category ID:', categoryId);
 
   const dispatch=useDispatch()
-  const {bundleList}=useSelector((state)=>state.bundleListReducer)
+  const {bundleList,total_items}=useSelector((state)=>state.bundleListReducer)
   const [visibleRows, setVisibleRows] = useState({});
 
 
   useEffect(()=>{
-    dispatch(getBundles(1,10,countryId,"",companyId,categoryId,""))
-  },[dispatch])
+    dispatch(getBundles(page+1,rowsPerPage,countryId,"",companyId,categoryId,searchTag))
+  },[dispatch,searchTag,page,rowsPerPage])
 
   const handleVisibilityToggle = (index) => {
     setVisibleRows((prev) => ({
@@ -108,19 +113,38 @@ export default function SocialBundle() {
     }));
   };
 
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   return (
     <Card elevation={3} sx={{ pt: "20px", mb: 3 }}>
       <CardHeader>
         <Title>Recharge</Title>
-        {/* <Select size="small" defaultValue="all">
-          <MenuItem value="all">ALL</MenuItem>
-          <MenuItem value="unlimited">UNLIMITED</MenuItem>
-          <MenuItem value="monthly">MONTHLY</MenuItem>
-          <MenuItem value="weekly">WEEKLY</MenuItem>
-          <MenuItem value="daily">DAILY</MenuItem>
-          <MenuItem value="hourly">HOURLY</MenuItem>
-          <MenuItem value="nightly">NIGHTLY</MenuItem>
-        </Select> */}
+        <TextField 
+          size="small" 
+          placeholder="Enter Number" 
+          variant="outlined" 
+          sx={{ marginLeft: 2 }} 
+    
+          />
+      </CardHeader>
+
+      <CardHeader>
+      
+        <Title></Title>
+        <TextField 
+          size="small" 
+          placeholder="Search By Title" 
+          variant="outlined" 
+          onChange={(e)=>setSearchTag(e.target.value)}
+          
+          />
       </CardHeader>
 
 
@@ -184,7 +208,18 @@ export default function SocialBundle() {
             ))}
           </TableBody>
         </ProductTable>
-        
+        <TablePagination
+          sx={{ px: 2 }}
+          page={page}
+          component="div"
+          rowsPerPage={rowsPerPage}
+          count={total_items}
+          onPageChange={handleChangePage}
+          rowsPerPageOptions={[10, 20, 30]}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          nextIconButtonProps={{ "aria-label": "Next Page" }}
+          backIconButtonProps={{ "aria-label": "Previous Page" }}
+      />
       </Box>
     </Card>
   );

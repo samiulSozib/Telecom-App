@@ -90,7 +90,8 @@ const Layout1 = () => {
   }, [isMdScreen]);
 
   return (
-    <Layout1Root className={layoutClasses}>
+   
+      <Layout1Root className={layoutClasses}>
       {showSidenav && sidenavMode !== "close" && (
         <SidenavTheme>
           <Layout1Sidenav />
@@ -144,6 +145,7 @@ const Layout1 = () => {
 
       {settings.secondarySidebar.show && <SecondarySidebar />}
     </Layout1Root>
+  
   );
 };
 

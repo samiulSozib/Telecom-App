@@ -85,9 +85,9 @@ export default function JwtLogin() {
   useEffect(()=>{
     if(isAuthenticated){
       navigate('/')
-      console.log("login success")
+      //console.log("login success")
     }else{
-      console.log(isAuthenticated)
+      //console.log(isAuthenticated)
     }
   },[isAuthenticated])
 

@@ -8,6 +8,7 @@ import {dashboardData} from '../../redux/actions/dashboardAction'
 import { useDispatch, useSelector } from "react-redux";
 import PaginationTable from "./shared/PaginationTable";
 import { Breadcrumb, SimpleCard } from "app/components";
+import AddForm from "./shared/AddForm";
 
 
 
@@ -20,7 +21,7 @@ const ContentBox = styled("div")(({ theme }) => ({
 
 
 
-export default function SubReseller() {
+export default function AddSubReseller() {
   const { palette } = useTheme();
 
 
@@ -30,9 +31,8 @@ export default function SubReseller() {
   return (
     <Fragment>
       <ContentBox className="analytics">
-      <SimpleCard title="Sub Reseller List">
-        <PaginationTable />
-        {/* <SimpleForm/> */}
+      <SimpleCard title="Add Sub Reseller">
+        <AddForm/>
       </SimpleCard>
       </ContentBox>
     </Fragment>

@@ -12,7 +12,7 @@ export const signIn=(singInInfo)=>{
         try{
             const response=await axios.post(login_url,singInInfo)
             const {api_token,user_info}=response.data.data
-            console.log(api_token)
+            //console.log(api_token)
             dispatch({type:SIGN_IN_SUCCESS,payload:{api_token,user_info}})
         }catch(error){
             dispatch({type:SIGN_IN_FAIL,payload:error.message})

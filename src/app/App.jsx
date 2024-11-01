@@ -14,11 +14,13 @@ export default function App() {
   const content = useRoutes(routes);
 
   return (
-    <SettingsProvider>
+    
+      <SettingsProvider>
         <MatxTheme>
           <CssBaseline />
           {content}
         </MatxTheme>
     </SettingsProvider>
+
   );
 }

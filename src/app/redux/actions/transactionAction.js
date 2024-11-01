@@ -25,7 +25,7 @@ export const getTransactions=(page,items_per_page)=>{
             const total_items=response.data.payload.pagination.total
             
            
-            console.log(reseller_balance_transactions)
+            //console.log(reseller_balance_transactions)
             dispatch({type:TRANSACTION_LIST_SUCCESS,payload:{reseller_balance_transactions,total_items}})
         }catch(error){
             dispatch({type:TRANSACTION_LIST_FAIL,payload:error.message})

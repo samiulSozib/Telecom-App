@@ -10,12 +10,34 @@ import {
   TableHead,
   IconButton,
   TablePagination,
-  Avatar
+  Avatar,
+  Button
 } from "@mui/material";
 import { Paragraph } from "app/components/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import {getSubReseller} from '../../../redux/actions/subResellerAction'
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+const CardHeader = styled(Box)(() => ({
+  display: "flex",
+  paddingLeft: "24px",
+  paddingRight: "24px",
+  marginBottom: "12px",
+  alignItems: "center",
+  justifyContent: "space-between"
+}));
+
+const Title = styled("span")(() => ({
+  fontSize: "1rem",
+  fontWeight: "500",
+  textTransform: "capitalize"
+}));
+
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  margin: theme.spacing(1)
+}));
 
 // STYLED COMPONENT
 const StyledTable = styled(Table)(() => ({
@@ -35,6 +57,8 @@ export default function PaginationTable() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const dispatch=useDispatch()
   const {subResellerList,total_items}=useSelector((state)=>state.subResellerListReducer)
+  const navigate = useNavigate();
+
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -49,10 +73,18 @@ export default function PaginationTable() {
     dispatch(getSubReseller())
   },[dispatch,page,rowsPerPage])
 
-  
+  const handleAdd=()=>{
+    navigate("/sub-reseller/add")
+  }
 
   return (
     <Box width="100%" overflow="auto">
+      <CardHeader>
+        <Title></Title>
+        <StyledButton variant="contained" color="secondary" onClick={()=>handleAdd()}>
+          Add
+        </StyledButton>
+      </CardHeader>
       <StyledTable sx={{ minWidth: 700 }}>
         <TableHead>
           <TableRow>

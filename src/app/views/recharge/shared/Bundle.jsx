@@ -13,7 +13,8 @@ import {
   TableBody,
   TableHead,
   IconButton,
-  TablePagination
+  TablePagination,
+  TextField
 } from "@mui/material";
 import { Paragraph } from "app/components/Typography";
 import { useLocation } from "react-router-dom";
@@ -21,6 +22,7 @@ import {getServices} from '../../../redux/actions/serviceAction'
 import {getBundles} from '../../../redux/actions/bundleAction'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect,useState } from "react";
+
 
 // STYLED COMPONENTS
 const CardHeader = styled(Box)(() => ({
@@ -64,7 +66,10 @@ const Small = styled("small")(({ bgcolor }) => ({
   boxShadow: "0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24)"
 }));
 
+
+
 const ImageListContainer = styled(Box)(() => ({
+  cursor:"pointer",
   display: "flex",
   overflowX: "auto",
   padding: "8px",
@@ -96,14 +101,20 @@ export default function Bundle() {
 
   const dispatch=useDispatch()
   const {serviceList}=useSelector((state)=>state.serviceListReducer)
-  const {bundleList}=useSelector((state)=>state.bundleListReducer)
+  const {bundleList,total_items}=useSelector((state)=>state.bundleListReducer)
   const [visibleRows, setVisibleRows] = useState({});
+  const [validity, setValidity] = useState("");
+  const [companyId,setCompanyId]=useState("")
+  const [searchTag,setSearchTag]=useState("")
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
 
 
   useEffect(()=>{
     dispatch(getServices(categoryId,countryId))
-    dispatch(getBundles(1,10,countryId,"",'',categoryId,""))
-  },[dispatch])
+    dispatch(getBundles(page+1,rowsPerPage,countryId,validity,companyId,categoryId,searchTag))
+  },[dispatch,validity,companyId,searchTag,page,rowsPerPage])
 
   const handleVisibilityToggle = (index) => {
     setVisibleRows((prev) => ({
@@ -112,12 +123,47 @@ export default function Bundle() {
     }));
   };
 
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   return (
     <Card elevation={3} sx={{ pt: "20px", mb: 3 }}>
       <CardHeader>
+      
         <Title>Recharge</Title>
-        <Select size="small" defaultValue="all">
-          <MenuItem value="all">ALL</MenuItem>
+        <TextField 
+          size="small" 
+          placeholder="Enter Number" 
+          variant="outlined" 
+          sx={{ marginLeft: 2 }} 
+    
+          />
+        
+        
+      </CardHeader>
+
+      <CardHeader>
+      <Title></Title>
+        <ImageListContainer>
+          {serviceList.map((service, index) => (
+            <Card levation={3} key={index} sx={{minWidth:"70px",display: "flex", alignItems: "center", justifyContent: "center"}} onClick={()=>setCompanyId(service.company.id)}>
+              <img src={service.company.company_logo} alt={service.company.company_name} style={{ width: "50px", height: "50px", objectFit: "cover" }} />
+            </Card>
+          ))}
+        </ImageListContainer>
+        <Title></Title>
+      </CardHeader>
+
+
+      <CardHeader>
+      <Select size="small" value={validity} onChange={(e) => setValidity(e.target.value)} displayEmpty>
+          <MenuItem value="">ALL</MenuItem>
           <MenuItem value="unlimited">UNLIMITED</MenuItem>
           <MenuItem value="monthly">MONTHLY</MenuItem>
           <MenuItem value="weekly">WEEKLY</MenuItem>
@@ -125,18 +171,14 @@ export default function Bundle() {
           <MenuItem value="hourly">HOURLY</MenuItem>
           <MenuItem value="nightly">NIGHTLY</MenuItem>
         </Select>
-      </CardHeader>
-
-      <CardHeader>
-      <Title></Title>
-        <ImageListContainer>
-          {serviceList.map((service, index) => (
-            <Card levation={3} key={index} sx={{minWidth:"70px",display: "flex", alignItems: "center", justifyContent: "center"}}>
-              <img src={service.company.company_logo} alt={service.company.company_name} style={{ width: "50px", height: "50px", objectFit: "cover" }} />
-            </Card>
-          ))}
-        </ImageListContainer>
         <Title></Title>
+        <TextField 
+          size="small" 
+          placeholder="Search By Title" 
+          variant="outlined" 
+          sx={{ marginLeft: 2 }} 
+          onChange={(e)=>setSearchTag(e.target.value)}
+          />
       </CardHeader>
 
       
@@ -199,6 +241,18 @@ export default function Bundle() {
             ))}
           </TableBody>
         </ProductTable>
+        <TablePagination
+          sx={{ px: 2 }}
+          page={page}
+          component="div"
+          rowsPerPage={rowsPerPage}
+          count={total_items}
+          onPageChange={handleChangePage}
+          rowsPerPageOptions={[10, 20, 30]}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          nextIconButtonProps={{ "aria-label": "Next Page" }}
+          backIconButtonProps={{ "aria-label": "Previous Page" }}
+      />
       </Box>
     </Card>
   );
