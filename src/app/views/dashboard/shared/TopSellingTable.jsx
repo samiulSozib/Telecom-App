@@ -78,7 +78,7 @@ export default function TopSellingTable() {
   },[orderList])
 
   return (
-    <Card elevation={3} sx={{ pt: "20px", m: 3 }}>
+    <Card elevation={3} sx={{ pt: "20px",marginLeft:"20px" }}>
       <CardHeader>
         <Title>Order List</Title>
         <Select size="small" defaultValue="this_month">
